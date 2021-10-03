@@ -1,0 +1,12 @@
+Shopping List for project
+
+CanBus ChipS
+	MCP2551
+	Resources:
+	http://www.learningaboutelectronics.com/Articles/MCP2551-CAN-transceiver-circuit.php	
+	https://www.seeedstudio.com/blog/2019/11/27/introduction-to-can-bus-and-how-to-use-it-with-arduino/
+	https://www.instructables.com/STM32-CAN-Interface/ -- USE THIS ONE
+	https://www.electronicshub.org/arduino-mcp2515-can-bus-tutorial/
+
+	MCP2515 Second chip used to interface with above:
+		Need libarys if used or we can get an STM32F1
