@@ -10,3 +10,7 @@ CanBus ChipS
 
 	MCP2515 Second chip used to interface with above:
 		Need libarys if used or we can get an STM32F1
+
+
+	Programmer:
+		https://www.aliexpress.com/item/1005001621626894.html?src=google&memo1=freelisting&src=google&albch=shopping&acnt=494-037-6276&slnk=&plac=&mtctp=&albbt=Google_7_shopping&albagn=888888&isSmbAutoCall=false&needSmbHouyi=false&albcp=9444695485&albag=99457316601&trgt=296904914040&crea=en1005001621626894&netw=u&device=c&albpg=296904914040&albpd=en1005001621626894&gclid=EAIaIQobChMIoYukxtit8wIVBR4rCh0BuQQyEAQYAiABEgIf2vD_BwE&gclsrc=aw.ds&aff_fcid=620664424ff248c4a6ea67d5220f00f0-1633245243267-04234-UneMJZVf&aff_fsk=UneMJZVf&aff_platform=aaf&sk=UneMJZVf&aff_trace_key=620664424ff248c4a6ea67d5220f00f0-1633245243267-04234-UneMJZVf&terminal_id=74ac2fc4e4d447f19827a9aa987c916a - ALYYEXPRESSO
