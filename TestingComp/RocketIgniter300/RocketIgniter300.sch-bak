@@ -1,0 +1,248 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L 74xx:74LS125 U?
+U 1 1 61595632
+P 3400 2400
+F 0 "U?" V 3446 2580 50  0000 L CNN
+F 1 "74LS125" V 3355 2580 50  0000 L CNN
+F 2 "" H 3400 2400 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 3400 2400 50  0001 C CNN
+	1    3400 2400
+	0    -1   -1   0   
+$EndComp
+$Comp
+L 74xx:74LS125 U?
+U 2 1 61597E6D
+P 6950 2400
+F 0 "U?" V 6996 2580 50  0000 L CNN
+F 1 "74LS125" V 6905 2580 50  0000 L CNN
+F 2 "" H 6950 2400 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 6950 2400 50  0001 C CNN
+	2    6950 2400
+	0    -1   -1   0   
+$EndComp
+$Comp
+L 74xx:74LS125 U?
+U 3 1 6159A0A2
+P 9300 1100
+F 0 "U?" H 9300 1417 50  0000 C CNN
+F 1 "74LS125" H 9300 1326 50  0000 C CNN
+F 2 "" H 9300 1100 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 9300 1100 50  0001 C CNN
+	3    9300 1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74LS125 U?
+U 4 1 6159A77B
+P 9950 1100
+F 0 "U?" H 9950 1417 50  0000 C CNN
+F 1 "74LS125" H 9950 1326 50  0000 C CNN
+F 2 "" H 9950 1100 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 9950 1100 50  0001 C CNN
+	4    9950 1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74LS125 U?
+U 5 1 6159B0FF
+P 10650 1150
+F 0 "U?" H 10880 1196 50  0000 L CNN
+F 1 "74LS125" H 10880 1105 50  0000 L CNN
+F 2 "" H 10650 1150 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 10650 1150 50  0001 C CNN
+	5    10650 1150
+	1    0    0    -1  
+$EndComp
+Text Notes 8950 650  0    50   ~ 0
+Extra TriStates if needed
+$Comp
+L Device:R terminatingResistor2
+U 1 1 6159DE36
+P 3400 2850
+F 0 "terminatingResistor2" H 3470 2896 50  0000 L CNN
+F 1 "120" H 3470 2805 50  0000 L CNN
+F 2 "" V 3330 2850 50  0001 C CNN
+F 3 "~" H 3400 2850 50  0001 C CNN
+	1    3400 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R terminatingResistor
+U 1 1 6159E746
+P 6950 2850
+F 0 "terminatingResistor" H 7020 2896 50  0000 L CNN
+F 1 "120" H 7020 2805 50  0000 L CNN
+F 2 "" V 6880 2850 50  0001 C CNN
+F 3 "~" H 6950 2850 50  0001 C CNN
+	1    6950 2850
+	1    0    0    -1  
+$EndComp
+Text GLabel 3650 2400 2    50   Input ~ 0
+EnableUART
+Text GLabel 7200 2400 2    50   Input ~ 0
+EnableUART
+Wire Wire Line
+	3400 3000 3400 3250
+Wire Wire Line
+	6950 3250 6950 3000
+Text Notes 3950 3200 2    50   ~ 0
+Can Low (RX)
+Text Notes 3950 2050 2    50   ~ 0
+Can High (TX)
+$Comp
+L 74xx:74LS158 U?
+U 1 1 615A10CD
+P 4850 4150
+F 0 "U?" V 4896 3106 50  0000 R CNN
+F 1 "74LS158" V 4805 3106 50  0000 R CNN
+F 2 "" H 4850 4150 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS158" H 4850 4150 50  0001 C CNN
+	1    4850 4150
+	0    -1   -1   0   
+$EndComp
+Text GLabel 4250 4650 3    50   Input ~ 0
+Tx
+Text GLabel 4550 4650 3    50   Input ~ 0
+Rx
+Text GLabel 4350 4650 3    50   Input ~ 0
+CanHigh
+Text GLabel 4650 4650 3    50   Input ~ 0
+CanLow
+Text GLabel 5450 4650 3    50   Input ~ 0
+EnableUART
+Text Notes 4700 3550 0    50   ~ 0
+Check the operation of this\nWe want both A and B to switch when UART is enabled
+$Comp
+L power:GND #PWR?
+U 1 1 615A4C91
+P 5850 4150
+F 0 "#PWR?" H 5850 3900 50  0001 C CNN
+F 1 "GND" H 5855 3977 50  0000 C CNN
+F 2 "" H 5850 4150 50  0001 C CNN
+F 3 "" H 5850 4150 50  0001 C CNN
+	1    5850 4150
+	1    0    0    -1  
+$EndComp
+Text GLabel 3950 4150 0    50   Input ~ 0
+5V
+Wire Wire Line
+	3400 2100 4550 2100
+Wire Wire Line
+	3400 3250 4250 3250
+Wire Wire Line
+	4250 3650 4250 3250
+Connection ~ 4250 3250
+Wire Wire Line
+	4250 3250 6100 3250
+Wire Wire Line
+	4550 3650 4550 2100
+Connection ~ 4550 2100
+Wire Wire Line
+	4550 2100 5850 2100
+Wire Wire Line
+	6100 1500 6100 3250
+Connection ~ 6100 3250
+Wire Wire Line
+	6100 3250 6950 3250
+Wire Wire Line
+	5850 2100 5850 1500
+Connection ~ 5850 2100
+Wire Wire Line
+	5850 2100 6950 2100
+Text Notes 5750 1350 0    50   ~ 0
+Coms Pins
+NoConn ~ 4850 3650
+NoConn ~ 5150 3650
+NoConn ~ 5250 4650
+NoConn ~ 5150 4650
+NoConn ~ 4950 4650
+NoConn ~ 4850 4650
+$Comp
+L MCU_ST_STM32F1:STM32F103CBTx U?
+U 1 1 615A7919
+P 9550 3900
+F 0 "U?" H 9500 2311 50  0000 C CNN
+F 1 "STM32F103CBTx" H 9500 2220 50  0000 C CNN
+F 2 "Package_QFP:LQFP-48_7x7mm_P0.5mm" H 8950 2500 50  0001 R CNN
+F 3 "http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00161566.pdf" H 9550 3900 50  0001 C CNN
+	1    9550 3900
+	1    0    0    -1  
+$EndComp
+Text Notes 9450 2250 0    50   ~ 0
+These are 3.3 - 3.6V \nThis simplifys stuff a whole bunch
+Text Notes 8650 4800 1    50   ~ 0
+Check pins on CubeIDE
+Text Notes 10450 4800 1    50   ~ 0
+Check pins on CubeIDE
+Text GLabel 8450 4050 3    50   Input ~ 0
+EnableUART
+Text Notes 600  5750 0    50   ~ 0
+Battery system
+Wire Notes Line
+	550  5600 2000 5600
+Wire Notes Line
+	2000 5600 2000 7600
+Wire Notes Line
+	2000 7600 550  7600
+Wire Notes Line
+	550  7600 550  5600
+$Comp
+L Interface_CAN_LIN:MCP2551-I-P U?
+U 1 1 615AAE5D
+P 1500 3000
+F 0 "U?" H 1500 3581 50  0000 C CNN
+F 1 "MCP2551-I-P" H 1500 3490 50  0000 C CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 1500 2500 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/devicedoc/21667d.pdf" H 1500 3000 50  0001 C CNN
+	1    1500 3000
+	1    0    0    -1  
+$EndComp
+Text Notes 1050 3650 0    50   ~ 0
+This has a 5V supply!!\nCan regulate using the MUC
+Wire Notes Line
+	600  550  2450 550 
+Wire Notes Line
+	2450 3450 600  3450
+$Comp
+L Interface_CAN_LIN:MCP2515-xSO U?
+U 1 1 615AC1EE
+P 1500 1550
+F 0 "U?" H 1500 2531 50  0000 C CNN
+F 1 "MCP2515-xSO" H 1500 2440 50  0000 C CNN
+F 2 "Package_SO:SOIC-18W_7.5x11.6mm_P1.27mm" H 1500 650 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21801e.pdf" H 1600 750 50  0001 C CNN
+	1    1500 1550
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	2450 550  2450 3450
+Wire Notes Line
+	600  550  600  3450
+Text Notes 2400 2150 1    50   ~ 0
+Can interface MCP2515\nOnly needed for lesser micro controllers
+Wire Notes Line
+	2250 5600 2250 7600
+Wire Notes Line
+	2250 7600 5750 7600
+Wire Notes Line
+	5750 7600 5750 5600
+Wire Notes Line
+	5750 5600 2250 5600
+Text Notes 2350 5750 0    50   ~ 0
+Ignition system
+$EndSCHEMATC
