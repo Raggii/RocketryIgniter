@@ -17,3 +17,6 @@ CanBus ChipS
 		
 	Nulceo board with can??
 		https://www.digikey.co.nz/en/products/detail/stmicro/NUCLEO-F103RB/4695527?utm_adgroup=Evaluation%20Boards%20-%20Embedded%20-%20MCU%2C%20DSP&utm_source=google&utm_medium=cpc&utm_campaign=Shopping_Product_Development%20Boards%2C%20Kits%2C%20Programmers&utm_term=&productid=4695527&gclid=EAIaIQobChMIzM_qvbyt8wIVkXwrCh0v2ASbEAYYAiABEgLJXvD_BwE
+
+
+Ams1117-3.3 much lower voltage drop than a 78xx series
