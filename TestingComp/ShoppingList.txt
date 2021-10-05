@@ -20,3 +20,7 @@ CanBus ChipS
 
 
 Ams1117-3.3 much lower voltage drop than a 78xx series
+
+
+https://www.pololu.com/product/2836
+buck boost converter thingo herr
