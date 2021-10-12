@@ -461,7 +461,7 @@ U 1 1 616DB9CC
 P 4900 5050
 F 0 "Q2" V 5149 5050 50  0000 C CNN
 F 1 "AO4576" V 5240 5050 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:LFPAK33" H 5100 4975 50  0001 L CIN
+F 2 "Package_TO_SOT_SMD:SOT-23-8_Handsoldering" H 5100 4975 50  0001 L CIN
 F 3 "https://assets.nexperia.com/documents/data-sheet/BUK7M42-60E.pdf" V 4900 5050 50  0001 L CNN
 	1    4900 5050
 	0    1    1    0   
@@ -501,7 +501,7 @@ U 1 1 6167F055
 P 3150 5050
 F 0 "Q1" V 3399 5050 50  0000 C CNN
 F 1 "AO4576" V 3490 5050 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:LFPAK33" H 3350 4975 50  0001 L CIN
+F 2 "Package_TO_SOT_SMD:SOT-23-8_Handsoldering" H 3350 4975 50  0001 L CIN
 F 3 "https://assets.nexperia.com/documents/data-sheet/BUK7M42-60E.pdf" V 3150 5050 50  0001 L CNN
 	1    3150 5050
 	0    1    1    0   
