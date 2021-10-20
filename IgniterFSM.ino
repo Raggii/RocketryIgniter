@@ -9,7 +9,8 @@ SoftwareSerial softSerial(4,5);
 #define FIRING 2 
 #define DISABLED 3 
 #define LOCKOUT 4
-#define TIMEOUT 100000
+#define TIMEOUT_TEN 10000
+#define TIMEOUT_TWO 2000
 
 //Received messages
 #define ARM_IGNITER_ONE "01234567"
@@ -23,84 +24,92 @@ SoftwareSerial softSerial(4,5);
 
 //Variables
 String receivedMessage;
-
+String stateStringList[] = {"IDLE","ARMED","FIRING","DISABED","LOCKOUT"};
 
 //Igniter variable struct
 typedef struct igniterStateMachine {
 
   int currentState; 
-  uint32_t timeout;
+  uint32_t timeOutCounter;
   bool continuity;
   bool arm;
   bool fire;
   int number;
-
+  bool isTimedOut;
   bool stateUpdate;
+  
 } Igniter;
 
 //Create an Igniter Struct
 Igniter* initIgniter(int number){
 
-  Igniter * returnIgniter = malloc(sizeof(Igniter));
+  Igniter * returnIgniter = (Igniter *)malloc(sizeof(Igniter) * 2);
   returnIgniter->currentState = IDLE;
-  returnIgniter->timeout = TIMEOUT;
   returnIgniter->continuity = true;
+  returnIgniter->timeOutCounter = 0;
   returnIgniter->arm = false;
   returnIgniter->fire = false;
   returnIgniter->number = number;
-
+  returnIgniter->isTimedOut = false;
   returnIgniter->stateUpdate = false;
   return returnIgniter;
+  
 }
 
-void serialOutMsg(char * message) {
+void serialOutMsg(String message) {
 
     Serial.println(message);
     softSerial.println(message);
   
 }
 
-void serialOutNoPl(char * message) {
+void printIgniterState(Igniter* igniter){
+
+  String number = String(igniter->number);
+  String arm = String(igniter->arm);
+  String fire = String(igniter->fire);
+  String timeout = String(igniter->isTimedOut);
+
+  Serial.println("Igniter " + number + "\nState is: " + stateStringList[igniter->currentState] + 
+                "\nArm Boolean: " + arm + "\nFire Boolean: " + fire + "\nTime Out: " + timeout+ "\n");
   
-  Serial.print(message);
-  softSerial.print(message);
-    
 }
 
-//Changes the state of the state machine if in IDLE state to ARMED
-void armFunction(Igniter* igniter) {
-
-  //SET THE TIMER HERE FOR TEN SECONDS
-  //SET THE TIMER HERE FOR TEN SECONDS
-  //SET THE TIMER HERE FOR TEN SECONDS
-  //SET THE TIMER HERE FOR TEN SECONDS
-  if(igniter->currentState == IDLE && !igniter->fire) {
-    char igniterNumber [10];
-    itoa(igniter->number, igniterNumber, 10);
-    igniter->currentState = ARMED;
-    serialOutNoPl("Igniter ");
-    serialOutNoPl(igniterNumber);
-    serialOutNoPl(" Set to Armed State\n");
-    
+/** Changes the state of the state machine if in IDLE state to ARMED
+*   Gets called if armed boolean changes
+**/
+int armFunction(Igniter* igniter) {
+  if(igniter->arm) {
+    if(igniter->currentState == IDLE && !igniter->fire)
+      igniter->currentState = ARMED;
+      //Start 10 Second timer and if fails then sets Arm and Fire to disabled
+      igniter->timeOutCounter = millis(); // Snap shot of time when state changed
+      
+  } else {
+     //serialOutMsg("IS NOT TRUE");
+     if(igniter->currentState == ARMED){
+        igniter->currentState = IDLE;
+        //Resets the timer when changes state
+        igniter->timeOutCounter = 0;
+     }
   }
-  return NULL;
+
+  return -1;
 }
 //Changes the state of the state machine if in ARMED state to FIRESTATE
-void fireFunction(Igniter* igniter) {
+int fireFunction(Igniter* igniter) {
 
-  //SET THE TIMER HERE FOR TWO SECONDS
-  //SET THE TIMER HERE FOR TWO SECONDS
-  //SET THE TIMER HERE FOR TWO SECONDS
-  //SET THE TIMER HERE FOR TWO SECONDS
-  if(igniter->currentState == ARMED && igniter->arm) {
-    char igniterNumber [10];
-    itoa(igniter->number, igniterNumber, 10);
-    igniter->currentState = FIRING;
-    serialOutNoPl("Igniter ");
-    serialOutNoPl(igniterNumber);
-    serialOutNoPl(" Set to Fire State\n");
-  } 
- return NULL; 
+  if(igniter->fire) {
+    if(igniter->currentState == ARMED && igniter->arm) {
+      igniter->currentState = FIRING;
+      //Resets the timer when changes state
+      igniter->timeOutCounter = millis();
+      
+      //Sets pin to Disabled for
+      
+    } 
+  }
+ return -1; 
 }
 
 
@@ -109,16 +118,21 @@ void fireFunction(Igniter* igniter) {
  *   returns NULL on fail 
 */
 void updateState(String receivedMessage, Igniter* igniter) {
-  if(igniter->continuity) {
+  if(igniter->continuity && !igniter->isTimedOut) {
     if(igniter->number == 1){
       if(receivedMessage == ARM_IGNITER_ONE) {
         //Arming true
-        if(igniter->arm) {
-            igniter->arm = false;
-            serialOutMsg("First Igniter Arm Pin Deactivated");
-        }else {
-          igniter->arm = true;
-          serialOutMsg("First Igniter Arm Pin Activated"); 
+        if(igniter->currentState == !LOCKOUT) {
+          if(igniter->arm) {
+              igniter->arm = false;
+              serialOutMsg("First Igniter Arm Pin Deactivated");
+          }else {
+            igniter->arm = true;
+            serialOutMsg("First Igniter Arm Pin Activated"); 
+          }
+        } else {
+           //Is locked out  
+            
         }
         igniter->stateUpdate = true;
 
@@ -134,8 +148,7 @@ void updateState(String receivedMessage, Igniter* igniter) {
         
         igniter->stateUpdate = true;
             
-      }else return NULL;
-      
+      }  
     }else if(igniter->number == 2){
       if(receivedMessage == ARM_IGNITER_TWO) {
          //Arming true
@@ -158,15 +171,69 @@ void updateState(String receivedMessage, Igniter* igniter) {
           serialOutMsg("Second Igniter Fire Pin Activated");  
         }
         igniter->stateUpdate = true;
-       } else return NULL;
+       } //else return NULL;
     }
+    
   } else {
-    //Continuity is not connected so dont update anystate 
-    serialOutMsg("Continuity check has failed, Please try again");
-    return NULL;
+    //Continuity is not connected so dont update anystate
+    if(igniter->isTimedOut) {
+        serialOutMsg("Timed out please wait");
+    } else {
+      serialOutMsg("Continuity check has failed, Please try again");
+    }
+    
+  }
+  if(!igniter->arm && !igniter->fire) {
+      igniter->currentState = IDLE;
+      serialOutMsg("First Igniter Set Back To Idle"); 
   }
   return NULL;
 }
+
+void disableIgnitor(Igniter* igniter) {
+
+    igniter->isTimedOut = true;
+    igniter->timeOutCounter = millis(); // Start next timer for lock out
+    igniter->currentState = DISABLED;
+    serialOutMsg("Igniter " + String(igniter->number) + " has been disabled for 10 seconds");
+  
+}
+
+void timeOutIgniter(Igniter * igniter) {
+  
+
+    igniter->timeOutCounter = 0; // Resets counter
+    igniter->currentState = LOCKOUT;
+    serialOutMsg("Igniter " + String(igniter->number) + " has been Locked Out, Set arm and fire to false to continue");
+    igniter->isTimedOut = false;
+  
+}
+
+void lockoutHandler(Igniter* igniter) {
+
+    if(igniter->currentState == ARMED) {
+      //If in armed state check for timer
+      //serialOutMsg(String(millis() - firstIgniter->timeOutCounter));
+      if((millis() - igniter->timeOutCounter) >= TIMEOUT_TEN) {
+        
+        disableIgnitor(igniter);
+          
+      }
+    } else if(igniter->currentState == DISABLED) {
+
+        if((millis() - igniter->timeOutCounter) >= TIMEOUT_TEN) {
+          
+          timeOutIgniter(igniter);
+        }      
+    } else if(igniter->currentState == FIRING) {
+
+      if((millis() - igniter->timeOutCounter) >= TIMEOUT_TWO) {
+          
+           disableIgnitor(igniter);
+      }
+  }
+}
+
 
 Igniter* firstIgniter = initIgniter(1);
 Igniter* secondIgniter = initIgniter(2);
@@ -199,49 +266,29 @@ void loop() {
       //If there was an updated state value then the stateUpdate will be called
 
       /**To Do:
-       * Add states going backwards when deactivate the checks
-       * Check why the states dont always activate
        * Add timing circuits to change from armed and firing to Disabled.
-       * Print current updates of the system every so often
        * On fire change update the pin for 2 seconds
        * Always output current state of both igniters and battery voltage
        */
       
       if(firstIgniter->stateUpdate) {
           firstIgniter->stateUpdate == false;
-
-          if(firstIgniter->arm) {
-
-              armFunction(firstIgniter);
-            
-          } 
-          if(firstIgniter->fire) {
-
-              fireFunction(firstIgniter);
-            
-          }
+          armFunction(firstIgniter);
+          fireFunction(firstIgniter);
           
-          
-          
-      }else if(secondIgniter->stateUpdate) {
+      }
+      if(secondIgniter->stateUpdate) {
           secondIgniter->stateUpdate == false;
+          armFunction(secondIgniter);
+          fireFunction(secondIgniter);
 
-          if(secondIgniter->arm) {
-
-              armFunction(secondIgniter);
-            
-          }
-          if(secondIgniter->fire) {
-              Serial.println("DOES GET HERE");
-              fireFunction(secondIgniter);
-            
-          }
-        
       }
     }
     //softSerial.println(receivedMessage.length());
+    printIgniterState(firstIgniter);
+    printIgniterState(secondIgniter);
   }
 
-
-  
+  lockoutHandler(firstIgniter);
+  lockoutHandler(secondIgniter);
 }
