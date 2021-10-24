@@ -1,0 +1,49 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# AO4576
+#
+DEF AO4576 Q 0 40 N N 1 L N
+F0 "Q" -550 100 50 H V L BNN
+F1 "AO4576" -550 0 50 H V L BNN
+F2 "SOIC8" 0 0 50 H I L BNN
+F3 "" 0 0 50 H I L BNN
+F4 "30V, 10mOhm" 0 0 50 H I L BNN "VALUE"
+F5 "785-1465-1-ND" 0 0 50 H I L BNN "PARTNO"
+DRAW
+P 2 0 0 10 -70 30 -70 0 N
+P 2 0 0 10 -70 0 -70 -30 N
+P 2 0 0 10 -70 125 -70 100 N
+P 2 0 0 10 -70 100 -70 75 N
+P 2 0 0 6 -70 0 0 0 N
+P 2 0 0 6 0 0 0 -100 N
+P 2 0 0 10 -70 -75 -70 -100 N
+P 2 0 0 10 -70 -100 -70 -125 N
+P 2 0 0 10 -100 100 -100 -100 N
+P 2 0 0 6 0 -100 -70 -100 N
+P 2 0 0 6 50 100 50 20 N
+P 2 0 0 6 50 20 50 -100 N
+P 2 0 0 6 0 -100 50 -100 N
+P 2 0 0 6 -70 100 50 100 N
+P 2 0 0 6 80 30 70 20 N
+P 2 0 0 6 70 20 50 20 N
+P 2 0 0 6 50 20 30 20 N
+P 2 0 0 6 30 20 20 10 N
+C 0 -100 14 0 0 0 N
+C 0 100 14 0 0 0 N
+P 4 0 0 6 50 20 30 -10 70 -10 50 20 f
+P 4 0 0 6 -60 0 -20 30 -20 -30 -60 0 f
+X ~ P$1 0 -200 100 U 40 40 0 0 P 
+X ~ P$2 0 -200 100 U 40 40 0 0 P 
+X ~ P$3 0 -200 100 U 40 40 0 0 P 
+X ~ P$4 -200 -100 100 R 40 40 0 0 P 
+X ~ P$5 0 200 100 D 40 40 0 0 P 
+X ~ P$6 0 200 100 D 40 40 0 0 P 
+X ~ P$7 0 200 100 D 40 40 0 0 P 
+X ~ P$8 0 200 100 D 40 40 0 0 P 
+ENDDRAW
+ENDDEF
+#
+# End Library
